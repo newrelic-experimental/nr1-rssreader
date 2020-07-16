@@ -1,6 +1,6 @@
 {
   "schemaType": "NERDPACK",
-  "id": "",
-  "displayName": "{{NERDPACK_NAME}}",
-  "description": "My new nerdpack"
+  "id": "6d088e63-8dea-4def-9156-48bb40cabfed",
+  "displayName": "nr1-rssreader",
+  "description": "New Relic One RSS Reader"
 }

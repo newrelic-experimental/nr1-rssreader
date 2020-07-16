@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "nr1-rssreader-launcher",
+    "displayName": "RssReader",
+    "description": "NR1 RSS reader",
+    "rootNerdletId": "nr1-rssreader-nerdlet"
+}
