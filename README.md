@@ -2,17 +2,9 @@
 
 # nr1-rssreader 
 
-> This template includes advice on how to craft a great README for your app. This template is just a starting point: feel free to change or add sections to suit your project. A few sections are standard across all projects. Don't change the text of those sections, except to customize the Explorer's Hub URL and the Contributing email alias. The standard sections are: "Open source License," "Support," "Community," "Issues / enhancement requests," and "Contributing."
->
-> If you need advice creating your README, ping @hero in the [#documentation](https://newrelic.slack.com/messages/documentation) channel or contact the Open Source Office.
->
-> Before you publish, remove all the commments (the block quotes beginning with `>`), then follow the [standard Nerdpack README review process](https://docs.google.com/document/d/1xUg1NnNJriC0mrUE1hqcHcs5dqzyLoSYE25qjwBaWQE/edit).
-
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-rssreader?include_prereleases&sort=semver) [![Snyk](https://snyk.io/test/github/newrelic/nr1-rssreader/badge.svg)](https://snyk.io/test/github/newrelic/nr1-rssreader)
-
 ## About this Nerdpack
 
->This nerdpack is simply an rss reader that displays each steam on its own card.  When you add a stream, you can add a logo for the site if you wish.   The initial intention of this application was for displaying status from SAAS 
+>This nerdpack is an rss reader that displays each stream on its own card.  When you add a stream, you can add a logo for the site if you wish.   The initial intention of this application was for displaying status from SAAS 
 companies like AWS , AZURE.., PagerDuty, etc.   However, it is not limited to that, it can be used for any RSS source, like news or weather. 
 
 ![Screenshot #1](screenshots/screenshot_01.png)
@@ -21,6 +13,11 @@ companies like AWS , AZURE.., PagerDuty, etc.   However, it is not limited to th
 
 This project is distributed under the [Apache 2 license](LICENSE).
 
+
+## Requirements
+
+This application requires a proxy server to fetch the rss streams through, in order to avoid CORS errors.  By defualt,  it is using a free proxy https://cors-anywhere.herokuapp.com/,
+but you can use any you wish.  Currently,  the proxy is hard coded in statuscard.js file. 
 
 ## Getting started
 
@@ -33,7 +30,7 @@ npm -v
 3. Execute the following command to clone this repository and run the code locally against your New Relic data:
 
 ```bash
-nr1 nerdpack:clone -r https://github.com/newrelic/nr1-rssreader.git
+nr1 nerdpack:clone -r https://github.com/newrelic-experimental/nr1-rssreader.git
 cd nr1-rssreader
 npm install
 nr1 nerdpack:serve
