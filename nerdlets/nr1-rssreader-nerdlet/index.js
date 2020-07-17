@@ -209,7 +209,6 @@ export default class RssStatusNerdletNerdlet extends React.Component {
           }
           handleConfirm={(rss, logo) => {
             var bla = logo;
-
             // add some checksum on the urls... 
             this.appendDashboard(rss, logo)
             this.setState({ modalOpen: false })
@@ -231,8 +230,6 @@ export default class RssStatusNerdletNerdlet extends React.Component {
                       var bla = logo;
                       this.editCard(uuid, rss, logo)
                       // add some checksum on the urls... 
-                      // this.appendDashboard(rss, logo)
-                      //this.setState({ modalOpen: false })
                     }
                     } handleDelete={(uuid) => {
                       this.removeCard(uuid)

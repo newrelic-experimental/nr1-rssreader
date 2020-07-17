@@ -8,6 +8,8 @@ import StatusList from './statuslist'
 import DeleteModal from './deletemodal'
 import EditModal from './editmodal'
 
+import moment from 'moment';
+
 let parser = new Parser();
 
 export default class StatusCard extends React.Component {
@@ -33,19 +35,15 @@ export default class StatusCard extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    var ddd = 0;
-    ddd = ddd + 1;
-    this.setState({ feed_data: [], title: "", url: nextProps.data.rssurl, logo: nextProps.data.logourl }, () => {
 
+    this.setState({ feed_data: [], title: "", url: nextProps.data.rssurl, logo: nextProps.data.logourl }, () => {
       this.makeRefresh()
     });
 
   }
 
   componentDidUpdate(prevProps, prevState) {
-    var bla = 0;
-    var bbldd = this.state.url;
-    bla = bla + 1;
+
   }
 
 
@@ -63,7 +61,72 @@ export default class StatusCard extends React.Component {
 
   //<h4>{this.state.title} </h4>   
   render() {
+
+    // trigger words: issue, incident, problem, 
+    // resolve words:  resolve, resolved, fixed
+    var triggers = ['issue', 'incident', 'problem'];
+    var resolutions = ['resolved', 'fixed']
     // let { feed } = this.state;
+    let statusval = "question"; //"gripfire";
+    let statuscolor = "yellow";
+
+    let minsincelu = 0;
+
+    if (this.state.feed_data.length > 0) {
+      var mostrecent = this.state.feed_data[0];
+      var momdt = moment(mostrecent.isoDate);
+      var now = new moment();
+      minsincelu = now.diff(momdt, 'minutes');
+
+      if(minsincelu < 0)
+        minsincelu = "future"
+
+      // // dig for trigger / resolve words to calc state.
+      var incidentfound = false;
+      var resolved = false;
+      for (var i = 0; i < triggers.length; i++) {
+        var test1 = mostrecent.contentSnippet.toLowerCase().search(triggers[i]);
+        if (test1 >= 0) {
+          incidentfound = true;
+          break;
+        }
+      }
+
+      for (var i = 0; i < resolutions.length; i++) {
+        var test1 = mostrecent.contentSnippet.toLowerCase().search(resolutions[i]);
+        if (test1 >= 0) {
+          resolved = true;
+          break;
+        }
+      }
+
+      // set up icon and color based on what we found. 
+      if (incidentfound) {
+        statusval = "gripfire";
+        statuscolor = "red"
+
+        if (resolved) {
+          statusval = "thumbs up";
+          statuscolor = "green"
+        }
+      }
+
+
+
+
+
+
+      //var test1 = mostrecent.contentSnippet.search("Resolved");
+      //if(test1 >= 0)
+      //{
+      //  statusval = "thumbs up";
+      //  statuscolor = "green"
+      //}
+
+    }
+
+
+
 
     return ([
 
@@ -99,6 +162,10 @@ export default class StatusCard extends React.Component {
       <Card fluid >
         <div style={{ height: '150px' }}>
           <div style={{ height: '25%', width: '100%' }}>
+            <Header as='h3' style={{ float: 'left' }}>Status:  </Header>
+            <Icon style={{ float: 'left' }} color={statuscolor} name={statusval} size="large" />
+
+
             <Button icon style={{ float: 'right' }} color='blue' size='mini'
               onClick={
                 () => {
@@ -117,15 +184,16 @@ export default class StatusCard extends React.Component {
               <Icon name='edit' size="large" />
             </Button>
           </div>
-          <div style={{ height: '60%', width: '30%', display: 'inline-block' }}>
+          <div style={{ height: '55%', width: '30%', display: 'inline-block' }}>
             <Image size='tiny' src={this.state.logo} />
           </div>
-          <div style={{ height: '60%', width: '70%', display: 'inline-block', verticalAlign: 'top' }}>
-            <div style={{ height: '70%', width: '100%'}}>
+          <div style={{ height: '55%', width: '70%', display: 'inline-block', verticalAlign: 'top' }}>
+            <div style={{ height: '70%', width: '100%' }}>
               <Header as='h3'>{this.state.title}</Header>
             </div>
-            <div style={{ height: '30%', width: '100%'}}>
-              <Header as='h5'>Minutes Since last Post: </Header>
+            <div style={{ height: '30%', width: '100%' }}>
+
+              <Header as='h5'>Minutes Since last Update: {minsincelu} </Header>
             </div>
           </div>
 
