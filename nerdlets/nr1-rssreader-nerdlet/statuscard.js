@@ -76,10 +76,27 @@ export default class StatusCard extends React.Component {
       var mostrecent = this.state.feed_data[0];
       var momdt = moment(mostrecent.isoDate);
       var now = new moment();
-      minsincelu = now.diff(momdt, 'minutes');
+      var delta = now.diff(momdt);
 
-      if(minsincelu < 0)
-        minsincelu = "future"
+      // calculate total duration
+      var duration = moment.duration(delta);
+      // days
+      var days = parseInt(duration.asDays());
+      // duration in hours
+      var hours = parseInt(duration.asHours()) % 24;
+      // duration in minutes
+      var minutes = parseInt(duration.asMinutes()) % 60;
+
+      var lu_val = "";
+      if (duration > 0) {
+        var labelday = (days > 1)?" days, ":" day, "
+        var labelhrs = (hours > 1)?" hrs, ":" hr, "
+        var labelmin = (minutes > 1)?" mins ":" min "
+
+        lu_val = days + labelday + hours + labelhrs+ minutes + labelmin
+      }
+      else 
+         lu_val = "future"
 
       // // dig for trigger / resolve words to calc state.
       var incidentfound = false;
@@ -111,21 +128,7 @@ export default class StatusCard extends React.Component {
         }
       }
 
-
-
-
-
-
-      //var test1 = mostrecent.contentSnippet.search("Resolved");
-      //if(test1 >= 0)
-      //{
-      //  statusval = "thumbs up";
-      //  statuscolor = "green"
-      //}
-
     }
-
-
 
 
     return ([
@@ -162,7 +165,7 @@ export default class StatusCard extends React.Component {
       <Card fluid >
         <div style={{ height: '150px' }}>
           <div style={{ height: '25%', width: '100%' }}>
-            <Header as='h3' style={{ float: 'left' }}>Status:  </Header>
+            <Header as='h3' style={{ float: 'left' }} color={statuscolor}>Status:  </Header>
             <Icon style={{ float: 'left' }} color={statuscolor} name={statusval} size="large" />
 
 
@@ -193,7 +196,7 @@ export default class StatusCard extends React.Component {
             </div>
             <div style={{ height: '30%', width: '100%' }}>
 
-              <Header as='h5'>Minutes Since last Update: {minsincelu} </Header>
+              <Header as='h5'>Last Update: {lu_val}  ago</Header>
             </div>
           </div>
 
