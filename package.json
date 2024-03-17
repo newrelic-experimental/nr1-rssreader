@@ -10,7 +10,7 @@
         "uuid": "7a304692-70ec-4fd2-abd3-178d15d7ac27"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^1.6.8",
         "lodash": "^4.17.19",
         "moment": "^2.27.0",
         "prop-types": "^15.6.2",
